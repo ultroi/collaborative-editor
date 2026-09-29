@@ -1,0 +1,1284 @@
+/* =========================================================
+   Dashboard (IDE Theme - Strict Flat Dark)
+   ========================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  --ide-bg: #1e1e1e;
+  --ide-sidebar: #252526;
+  --ide-header: #333333;
+  --ide-border: #3c3c3c; /* Slightly lighter for crisp edges */
+  --ide-input-bg: #3c3c3c;
+  --ide-input-border: #454545;
+  --ide-text: #cccccc;
+  --ide-text-muted: #858585;
+  --ide-accent: #107cc4; /* VS Code Blue */
+  --ide-accent-hover: #1177bb;
+  --ide-active: #37373d;
+  --ide-hover: #2a2d2e;
+  --ide-error: #f48771;
+  --ide-warning: #cca700;
+  --ide-success: #89d185;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+body {
+  margin: 0;
+  background-color: var(--ide-bg);
+  color: var(--ide-text);
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.dashboard-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ide-bg);
+}
+
+
+/* Base structural resets */
+button,
+input,
+select {
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* Clear aggressive WebKit search defaults causing padding issues */
+input[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+.app-header {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: var(--ide-sidebar);
+  border-bottom: 1px solid var(--ide-border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ide-text);
+}
+
+.brand-mark {
+  color: var(--ide-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-name {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-wrap {
+  position: relative;
+}
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--ide-text);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.profile-button:hover,
+.profile-button[aria-expanded="true"] {
+  background-color: var(--ide-hover);
+  border-color: var(--ide-border);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--ide-accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  overflow: hidden;
+}
+
+.avatar-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 13px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Profile Dropdown */
+.profile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 280px;
+  background-color: var(--ide-sidebar);
+  border: 1px solid var(--ide-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  z-index: 50;
+}
+
+.profile-menu-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--ide-bg);
+  border-bottom: 1px solid var(--ide-border);
+}
+
+.profile-menu-avatar {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.profile-menu-identity strong {
+  display: block;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.profile-menu-identity span {
+  color: var(--ide-text-muted);
+  font-size: 11px;
+}
+
+.profile-details {
+  padding: 8px 0;
+}
+
+.profile-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 16px;
+  font-size: 12px;
+}
+
+.profile-detail-row span {
+  color: var(--ide-text-muted);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.profile-detail-row strong {
+  color: var(--ide-text);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-edit-button,
+.menu-danger {
+  width: 100%;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--ide-border);
+  color: var(--ide-text);
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.profile-edit-button:hover {
+  background-color: var(--ide-hover);
+  color: #fff;
+}
+
+.menu-danger {
+  color: var(--ide-error);
+}
+
+.menu-danger:hover {
+  background-color: #a1260d;
+  color: #fff;
+}
+
+/* =========================================================
+   Main Workspace Area
+   ========================================================= */
+.dashboard-main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 48px 20px;
+}
+
+.eyebrow {
+  color: var(--ide-text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 8px 0;
+}
+
+.welcome-heading {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.username-highlight {
+  color: var(--ide-accent);
+}
+
+.intro-copy {
+  color: var(--ide-text-muted);
+  font-size: 13px;
+  margin: 0 0 32px 0;
+}
+
+/* Actions Bar */
+.dashboard-create-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.1s,
+    border-color 0.1s;
+}
+
+.primary-button {
+  background-color: var(--ide-accent);
+  color: #fff;
+}
+
+.primary-button:hover:not(:disabled) {
+  background-color: var(--ide-accent-hover);
+}
+
+.secondary-button {
+  background-color: var(--ide-input-bg);
+  border-color: var(--ide-input-border);
+  color: var(--ide-text);
+}
+
+.secondary-button:hover:not(:disabled) {
+  background-color: var(--ide-hover);
+  border-color: var(--ide-text-muted);
+}
+
+.danger-button {
+  background-color: #a1260d;
+  color: #fff;
+}
+
+.danger-button:hover:not(:disabled) {
+  background-color: #c53214;
+}
+
+.primary-button:disabled,
+.secondary-button:disabled,
+.danger-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   Project Grid & Toolbar
+   ========================================================= */
+.section-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ide-border);
+  margin-bottom: 24px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.count-pill {
+  background-color: var(--ide-input-bg);
+  color: var(--ide-text-muted);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  border: 1px solid var(--ide-border);
+}
+
+.toolbar-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.search-box {
+  position: relative;
+  width: 260px;
+}
+
+.search-box > span {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ide-text-muted);
+  pointer-events: none;
+}
+
+.search-box input,
+.sort-select {
+  height: 32px;
+  background-color: var(--ide-input-bg);
+  border: 1px solid var(--ide-input-border);
+  border-radius: 2px;
+  color: var(--ide-text);
+  font-size: 13px;
+  outline: none;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0 32px;
+}
+
+.search-box input:focus,
+.sort-select:focus {
+  border-color: var(--ide-accent);
+}
+
+.search-clear {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--ide-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-clear:hover {
+  color: var(--ide-text);
+}
+
+.sort-select {
+  padding: 0 12px;
+}
+
+/* Grid */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  background-color: var(--ide-sidebar);
+  border: 1px solid var(--ide-border);
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--ide-text);
+  transition:
+    border-color 0.1s,
+    background-color 0.1s;
+}
+
+.project-card:hover {
+  border-color: var(--ide-text-muted);
+  background-color: #2a2d2e;
+}
+
+.project-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.project-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background-color: rgba(0, 122, 204, 0.1);
+  color: var(--ide-accent);
+  border-radius: 4px;
+}
+
+.project-card-top-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.project-open,
+.project-menu-button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--ide-text-muted);
+  padding: 6px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: grid;
+  place-items: center;
+}
+
+.project-open:hover,
+.project-menu-button:hover,
+.project-menu-button[aria-expanded="true"] {
+  background-color: var(--ide-input-bg);
+  border-color: var(--ide-border);
+  color: var(--ide-text);
+}
+
+.project-card-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.project-card-content p {
+  margin: 0 0 20px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ide-text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-card-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--ide-border);
+  font-size: 11px;
+}
+
+.project-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ide-text);
+}
+
+.project-status i {
+  width: 6px;
+  height: 6px;
+  background-color: var(--ide-success);
+  border-radius: 50%;
+}
+
+.project-meta {
+  color: var(--ide-text-muted);
+}
+
+/* Project Context Menu */
+.project-menu-wrap {
+  position: relative;
+}
+
+.project-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 40;
+  width: 180px;
+  background-color: var(--ide-sidebar);
+  border: 1px solid var(--ide-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  padding: 4px 0;
+}
+
+.project-menu button,
+.project-menu a {
+  width: 100%;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  color: var(--ide-text);
+  font-size: 12px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.project-menu button:hover,
+.project-menu a:hover {
+  background-color: var(--ide-accent);
+  color: #fff;
+}
+
+.project-menu-danger {
+  color: var(--ide-error) !important;
+}
+
+.project-menu-danger:hover {
+  background-color: #a1260d !important;
+}
+
+/* =========================================================
+   Empty & Error States
+   ========================================================= */
+.empty-projects {
+  text-align: center;
+  padding: 64px 20px;
+  background-color: var(--ide-sidebar);
+  border: 1px dashed var(--ide-border);
+  border-radius: 4px;
+}
+
+.empty-icon {
+  color: var(--ide-text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.empty-projects h3 {
+  font-size: 15px;
+  color: #fff;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.empty-projects p {
+  font-size: 13px;
+  color: var(--ide-text-muted);
+  margin: 0 0 24px 0;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: rgba(244, 135, 113, 0.1);
+  border: 1px solid rgba(244, 135, 113, 0.2);
+  padding: 12px 16px;
+  border-radius: 2px;
+  color: var(--ide-error);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.alert button {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(244, 135, 113, 0.3);
+  color: var(--ide-error);
+  padding: 4px 12px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.alert button:hover {
+  background-color: rgba(244, 135, 113, 0.1);
+}
+
+/* =========================================================
+   Modals (Strict Flat Style)
+   ========================================================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.create-modal,
+.project-action-modal,
+.delete-project-modal,
+.github-import-modal {
+  background-color: var(--ide-sidebar);
+  border: 1px solid var(--ide-border);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 440px;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: var(--ide-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--ide-text);
+}
+
+.modal-icon {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(0, 122, 204, 0.1);
+  color: var(--ide-accent);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-icon-danger {
+  background-color: rgba(244, 135, 113, 0.1);
+  color: var(--ide-error);
+}
+
+.create-modal h2 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.modal-copy {
+  margin: 0 0 24px 0;
+  font-size: 13px;
+  color: var(--ide-text-muted);
+  line-height: 1.5;
+}
+
+/* Strict Input Fields to fix overlapping */
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  color: var(--ide-text);
+  margin-bottom: 8px;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ide-text-muted);
+  pointer-events: none;
+}
+
+.input-wrap input {
+  width: 100%;
+  height: 36px;
+  background-color: var(--ide-input-bg);
+  border: 1px solid var(--ide-input-border);
+  border-radius: 2px;
+  color: var(--ide-text);
+  font-size: 13px;
+  padding: 0 12px 0 38px;
+  outline: none;
+}
+
+.input-wrap input:focus {
+  border-color: var(--ide-accent);
+}
+
+.profile-readonly-input input {
+  background-color: #2a2d2e;
+  color: var(--ide-text-muted);
+  cursor: not-allowed;
+}
+
+.field-help {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--ide-text-muted);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* =========================================================
+   GitHub Import Specifics
+   ========================================================= */
+.github-connect-panel {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.github-connect-mark {
+  color: var(--ide-text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.github-connect-panel h3 {
+  font-size: 15px;
+  color: #fff;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.github-connect-panel p {
+  font-size: 13px;
+  color: var(--ide-text-muted);
+  margin: 0 0 24px 0;
+}
+
+.github-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.github-repository-list {
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--ide-border);
+  border-radius: 2px;
+  background-color: var(--ide-bg);
+}
+
+.github-repository-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ide-border);
+  color: var(--ide-text);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.github-repository-row:last-child {
+  border-bottom: none;
+}
+
+.github-repository-row:hover {
+  background-color: var(--ide-hover);
+}
+
+.github-repository-row.selected {
+  background-color: rgba(0, 122, 204, 0.1);
+  border-color: var(--ide-accent);
+}
+
+.github-repository-icon {
+  color: var(--ide-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.github-repository-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.github-repository-info strong {
+  display: block;
+  font-size: 13px;
+  color: #fff;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.github-repository-info small {
+  display: block;
+  font-size: 11px;
+  color: var(--ide-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.github-repository-check {
+  color: var(--ide-accent);
+  display: flex;
+  align-items: center;
+}
+
+.github-state {
+  text-align: center;
+  padding: 48px 0;
+  color: var(--ide-text-muted);
+  font-size: 13px;
+}
+
+.github-empty-state {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.github-empty-state strong {
+  display: block;
+  color: #fff;
+  font-size: 13px;
+  margin: 8px 0 4px 0;
+}
+
+.github-empty-state small {
+  color: var(--ide-text-muted);
+  font-size: 12px;
+}
+
+/* Custom Scrollbar */
+.create-modal::-webkit-scrollbar,
+.github-repository-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.create-modal::-webkit-scrollbar-track,
+.github-repository-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.create-modal::-webkit-scrollbar-thumb,
+.github-repository-list::-webkit-scrollbar-thumb {
+  background: #454545;
+  border-radius: 4px;
+}
+
+.create-modal::-webkit-scrollbar-thumb:hover,
+.github-repository-list::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+
+/* =========================================================
+   Skeleton Loader
+   ========================================================= */
+.skeleton-card {
+  pointer-events: none;
+}
+
+.skeleton {
+  background-color: var(--ide-input-bg);
+  border-radius: 2px;
+  animation: pulse 1.5s infinite;
+}
+
+.skeleton-icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 16px;
+}
+.skeleton-title {
+  width: 60%;
+  height: 16px;
+  margin-bottom: 12px;
+}
+.skeleton-line {
+  width: 100%;
+  height: 12px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* =========================================================
+   Final CodeSpace IDE Theme Overrides
+   ========================================================= */
+.project-card,
+.project-card a,
+.project-card-main-link,
+.project-card-main-link:hover,
+.project-card-main-link:focus,
+.project-card-main-link:active,
+.project-open,
+.project-open:hover,
+.project-open:focus,
+.project-open:active {
+  text-decoration: none !important;
+}
+
+.project-card-main-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  color: inherit;
+}
+.project-card-main-link h3,
+.project-card-main-link p,
+.project-card-main-link span {
+  text-decoration: none !important;
+}
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(2px);
+}
+.create-modal,
+.project-action-modal,
+.delete-project-modal,
+.github-import-modal {
+  background: #252526 !important;
+  color: #cccccc !important;
+  border: 1px solid #3c3c3c !important;
+  border-radius: 4px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65) !important;
+}
+.create-modal h2,
+.create-modal h3 {
+  color: #fff !important;
+}
+.create-modal .modal-copy {
+  color: #858585 !important;
+}
+.create-modal .field label {
+  color: #cccccc !important;
+}
+.create-modal .input-wrap input {
+  background: #3c3c3c !important;
+  color: #cccccc !important;
+  border: 1px solid #454545 !important;
+  border-radius: 2px !important;
+}
+.create-modal .input-wrap input:focus {
+  border-color: #0e639c !important;
+  box-shadow: none !important;
+}
+.create-modal .input-wrap input::placeholder {
+  color: #858585;
+}
+.create-modal .modal-close {
+  color: #858585;
+}
+.create-modal .modal-close:hover {
+  color: #cccccc;
+  background: #2a2d2e;
+}
+.create-modal .secondary-button {
+  background: #3c3c3c;
+  border-color: #454545;
+  color: #cccccc;
+}
+.create-modal .secondary-button:hover:not(:disabled) {
+  background: #2a2d2e;
+  border-color: #858585;
+}
+.create-modal .primary-button {
+  background: #0e639c;
+  border-color: #0e639c;
+  color: #fff;
+}
+.create-modal .primary-button:hover:not(:disabled) {
+  background: #1177bb;
+}
+.create-modal .danger-button {
+  background: #a1260d;
+  border-color: #a1260d;
+  color: #fff;
+}
+.create-modal .danger-button:hover:not(:disabled) {
+  background: #c53214;
+}
+.create-modal .modal-actions {
+  border-top: 1px solid #3c3c3c;
+  padding-top: 20px;
+}
+
+.github-connect-panel {
+  background: #1e1e1e;
+  border: 1px solid #3c3c3c;
+  border-radius: 3px;
+  padding: 28px 20px;
+}
+.github-connect-mark {
+  color: #cccccc;
+}
+.github-connect-panel h3 {
+  color: #fff;
+}
+.github-connect-panel p {
+  color: #858585;
+}
+.github-toolbar {
+  background: #1e1e1e;
+  padding: 10px;
+  border: 1px solid #3c3c3c;
+  border-radius: 3px;
+}
+.github-repository-list {
+  background: #1e1e1e !important;
+  border: 1px solid #3c3c3c !important;
+}
+.github-repository-row {
+  background: #1e1e1e;
+  color: #cccccc;
+  border-bottom: 1px solid #3c3c3c;
+}
+.github-repository-row:hover {
+  background: #2a2d2e !important;
+}
+.github-repository-row.selected {
+  background: rgba(14, 99, 156, 0.18) !important;
+  border-left: 2px solid #0e639c;
+}
+.github-repository-info strong {
+  color: #fff;
+}
+.github-repository-info small {
+  color: #858585;
+}
+.github-repository-check {
+  color: #0e639c;
+}
+.github-empty-state {
+  background: #1e1e1e;
+  color: #858585;
+}
+.github-empty-state strong {
+  color: #cccccc;
+}
+
+.delete-project-modal .modal-icon-danger {
+  background: rgba(244, 135, 113, 0.1);
+  color: #f48771;
+}
+.delete-project-modal .modal-copy strong {
+  color: #fff;
+}
+.delete-project-modal .danger-button {
+  background: #a1260d;
+  border: 1px solid #a1260d;
+}
+.delete-project-modal .danger-button:hover:not(:disabled) {
+  background: #c53214;
+}
+
+/* =========================================================
+   Input Icon / Text Overlap Fix
+   ========================================================= */
+
+.create-modal .input-wrap {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.create-modal .input-wrap .input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #858585;
+  pointer-events: none;
+}
+
+.create-modal .input-wrap > input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  padding-left: 40px !important;
+  padding-right: 12px;
+  box-sizing: border-box;
+}
+
+/* Read-only username field */
+.create-modal .profile-readonly-input > input {
+  padding-left: 40px !important;
+}
+
+/* GitHub repository search */
+.create-modal .github-search-box > input {
+  padding-left: 40px !important;
+}
+
+/* Search icon should stay above the input background */
+.create-modal .github-search-box .input-icon {
+  z-index: 3;
+}
+
+/* Don't let browser search styling reintroduce spacing problems */
+.create-modal input[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+
+
+/* =========================================================
+   GitHub Dashboard Button
+   ========================================================= */
+
+.github-connect-button {
+  background-color: var(--ide-hover) !important;
+  border: 1px solid var(--ide-border) !important;
+  color: #ffffff !important;
+}
+
+.github-connect-button:hover:not(:disabled) {
+  background-color: var(--ide-input-bg) !important;
+  border-color: var(--ide-input-border) !important;
+  color: var(--ide-text) !important;
+}
+
+.github-connect-button svg {
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.github-connect-button:hover:not(:disabled) svg {
+  color: var(--ide-text);
+}
+
+/* Connected indicator — keep green */
+.github-connected-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3fb950;
+  box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.35);
+  flex-shrink: 0;
+}

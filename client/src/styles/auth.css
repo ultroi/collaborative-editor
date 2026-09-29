@@ -1,0 +1,463 @@
+/* =========================================================
+   Authentication (VS Code Theme)
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --vscode-bg: #1e1e1e;
+  --vscode-sidebar: #252526;
+  --vscode-header: #333333;
+  --vscode-border: #2d2d2d;
+  --vscode-input-bg: #3c3c3c;
+  --vscode-text: #cccccc;
+  --vscode-text-muted: #858585;
+  --vscode-accent: #007acc;
+  --vscode-accent-hover: #005f9e;
+  --vscode-hover: #2a2d2e;
+  --vscode-error: #f48771;
+  --vscode-success: #89d185;
+}
+
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 44px;
+  background: var(--vscode-bg);
+  color: var(--vscode-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Hide old glowing artifacts */
+.auth-background-grid,
+.auth-glow {
+  display: none !important;
+}
+
+.auth-brand {
+  position: absolute;
+  top: 28px;
+  left: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--vscode-text);
+}
+
+.brand-mark {
+  color: var(--vscode-accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+}
+
+.auth-layout {
+  position: relative;
+  z-index: 1;
+  width: min(1060px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 92px;
+  align-items: center;
+}
+
+.register-layout {
+  grid-template-columns: 1fr 400px;
+}
+
+.auth-showcase {
+  max-width: 560px;
+  animation: fade-in 0.4s ease both;
+}
+
+.auth-showcase h1 {
+  margin: 23px 0 16px;
+  font-size: clamp(40px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.auth-showcase h1 span {
+  color: var(--vscode-accent);
+}
+
+.auth-showcase > p {
+  max-width: 490px;
+  margin: 0;
+  color: var(--vscode-text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Flat IDE-style code preview */
+.code-preview {
+  width: min(470px, 100%);
+  margin-top: 38px;
+  overflow: hidden;
+  background: var(--vscode-sidebar);
+  border: 1px solid var(--vscode-border);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.code-preview-bar {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 13px;
+  background: var(--vscode-bg);
+  border-bottom: 1px solid var(--vscode-border);
+  color: var(--vscode-text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+
+.window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.window-dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #454545;
+}
+
+.preview-live {
+  margin-left: auto;
+  color: var(--vscode-success);
+  font-size: 9px;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.code-lines {
+  padding: 16px 0;
+  color: var(--vscode-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.code-lines span {
+  display: block;
+  padding: 0 16px;
+}
+
+.code-lines b {
+  display: inline-block;
+  width: 32px;
+  color: #555;
+  font-weight: 400;
+  user-select: none;
+}
+
+/* VS Code Dark+ Syntax Highlighting */
+.code-lines em {
+  color: #569cd6; /* Keywords */
+  font-style: normal;
+}
+
+.code-lines strong {
+  color: #dcdcaa; /* Functions */
+  font-weight: normal;
+}
+
+.code-lines mark {
+  color: #ce9178; /* Strings */
+  background: transparent;
+}
+
+/* Authentication Panel */
+.auth-panel {
+  animation: fade-in 0.4s 0.1s ease both;
+}
+
+.auth-card {
+  position: relative;
+  width: 100%;
+  padding: 32px;
+  background: var(--vscode-sidebar);
+  border: 1px solid var(--vscode-border);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.auth-card-heading h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.auth-card-heading > p:last-child {
+  margin: 0 0 24px;
+  color: var(--vscode-text-muted);
+  font-size: 13px;
+}
+
+.eyebrow {
+  color: var(--vscode-text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 4px;
+}
+
+/* Forms */
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--vscode-text);
+  font-size: 12px;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap input {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px 0 32px;
+  background: var(--vscode-input-bg);
+  border: 1px solid var(--vscode-border);
+  border-radius: 2px;
+  color: var(--vscode-text);
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input-wrap input::placeholder {
+  color: #666;
+}
+
+.input-wrap input:focus {
+  border-color: var(--vscode-accent);
+}
+
+.input-icon {
+  position: absolute;
+  z-index: 1;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--vscode-text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  border: 0;
+  padding: 4px 8px;
+  color: var(--vscode-text-muted);
+  background: transparent;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.password-toggle:hover {
+  color: var(--vscode-text);
+  background: var(--vscode-hover);
+}
+
+.primary-button.auth-submit {
+  width: 100%;
+  height: 36px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background: var(--vscode-accent);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.primary-button.auth-submit:hover:not(:disabled) {
+  background: var(--vscode-accent-hover);
+}
+
+.primary-button.auth-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Dividers */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.auth-divider span {
+  height: 1px;
+  flex: 1;
+  background: var(--vscode-border);
+}
+
+.auth-divider small {
+  color: var(--vscode-text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Social Buttons */
+.social-login {
+  display: grid;
+  gap: 8px;
+}
+
+.social-button {
+  width: 100%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid var(--vscode-border);
+  border-radius: 2px;
+  color: var(--vscode-text);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.social-button:hover {
+  background: var(--vscode-hover);
+}
+
+.social-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.github-icon {
+  color: #f0f0f0;
+}
+
+.auth-switch {
+  margin: 16px 0 0;
+  text-align: center;
+  color: var(--vscode-text-muted);
+  font-size: 12px;
+}
+
+.auth-switch a {
+  color: var(--vscode-accent);
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+.auth-legal {
+  margin: 16px 0 0;
+  text-align: center;
+  color: #555;
+  font-size: 11px;
+}
+
+/* Error Alert */
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(244, 135, 113, 0.1);
+  border: 1px solid rgba(244, 135, 113, 0.2);
+  color: var(--vscode-error);
+  padding: 10px 12px;
+  border-radius: 2px;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.form-error button {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: var(--vscode-error);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .auth-page {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .register-layout {
+    grid-template-columns: 1fr;
+  }
+  .auth-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    width: min(400px, 100%);
+  }
+  .auth-showcase {
+    display: none;
+  }
+  .auth-brand {
+    left: 20px;
+    top: 20px;
+  }
+}
+
+@media (max-width: 680px) {
+  .auth-page {
+    padding: 80px 16px 32px;
+  }
+  .auth-card {
+    padding: 24px 20px;
+  }
+}
