@@ -38,32 +38,32 @@
 ---
 
 ## 🚀 Overview
-**CodeSpace** is a full-stack browser-based collaborative development workspace designed around a VS Code-inspired coding experience[cite: 1]. The application combines project management, file management, code editing, real-time collaboration, access control, project communication, and GitHub repository importing into a single workspace[cite: 1]. 
+**CodeSpace** is a full-stack browser-based collaborative development workspace designed around a VS Code-inspired coding experience. The application combines project management, file management, code editing, real-time collaboration, access control, project communication, and GitHub repository importing into a single workspace. 
 
 Instead of switching between multiple tools, CodeSpace brings these workflows together inside one development environment[cite: 1].
 
 ## 🎯 Problem Statement
-Traditional browser-based code editors often focus primarily on editing code in isolation[cite: 1]. However, collaborative development introduces additional problems such as tracking active users, handling simultaneous file edits, managing hierarchical project permissions, and integrating team communication close to the code[cite: 1]. CodeSpace was built to explore and solve these problems from both the frontend application and backend system architecture perspectives[cite: 1].
+Traditional browser-based code editors often focus primarily on editing code in isolation. However, collaborative development introduces additional problems such as tracking active users, handling simultaneous file edits, managing hierarchical project permissions, and integrating team communication close to the code. CodeSpace was built to explore and solve these problems from both the frontend application and backend system architecture perspectives[cite: 1].
 
 ## ✨ Features
 
 ### 🔐 Authentication & Authorization
 CodeSpace strictly separates user authentication (identity) from project-level authorization (access)[cite: 1]. 
 * **Role-Based Access Control (RBAC):** Supports hierarchical project roles including Owner, Admin, Editor, and Viewer[cite: 1].
-* **File & Folder Permissions:** Permissions can be inherited from the project level down to specific folders and files, with the backend resolving the effective permission[cite: 1].
+* **File & Folder Permissions:** Permissions can be inherited from the project level down to specific folders and files, with the backend resolving the effective permission.
 
 ### 📝 Monaco Code Editor & File Management
-* **Rich Editing Experience:** Powered by Monaco Editor, featuring syntax highlighting, language-aware editing, keyboard shortcuts, word wrapping, and minimap configuration[cite: 1].
-* **Dirty-State Management:** Tracks unsaved changes by comparing editor modifications against the saved baseline content[cite: 1].
+* **Rich Editing Experience:** Powered by Monaco Editor, featuring syntax highlighting, language-aware editing, keyboard shortcuts, word wrapping, and minimap configuration.
+* **Dirty-State Management:** Tracks unsaved changes by comparing editor modifications against the saved baseline content.
 
 ### 👥 Real-Time Collaboration & Presence
-* **Live Presence:** Users connected to the same project can instantly see other active collaborators via Socket.IO[cite: 1].
-* **File Locking:** Utilizes a heartbeat-monitored, file-level locking mechanism to prevent conflicting edits[cite: 1].
-* **Project Team Chat:** Built-in real-time chat scoped to the project environment[cite: 1].
+* **Live Presence:** Users connected to the same project can instantly see other active collaborators via Socket.IO.
+* **File Locking:** Utilizes a heartbeat-monitored, file-level locking mechanism to prevent conflicting edits.
+* **Project Team Chat:** Built-in real-time chat scoped to the project environment.
 
 ### 🐙 GitHub Repository Import
-* Seamlessly import existing GitHub repositories directly into CodeSpace projects[cite: 1].
-* Automatically skips common generated or dependency directories (e.g., `.git`, `node_modules`, `dist`)[cite: 1].
+* Seamlessly import existing GitHub repositories directly into CodeSpace projects.
+* Automatically skips common generated or dependency directories (e.g., `.git`, `node_modules`, `dist`).
 
 ## 🏗️ System Architecture
 Security and state management are designed with the core engineering principle that the **backend is authoritative**[cite: 1]. 
