@@ -19,129 +19,54 @@
 
 ## 📌 Table of Contents
 
-- [Overview](#-overview)
-- [Why CodeSpace?](#-why-codespace)
-- [Core Features](#-core-features)
-- [Application Flow](#-application-flow)
-- [Collaboration Model](#-collaboration-model)
-- [Permissions & Roles](#-permissions--roles)
-- [File Locking](#-file-locking)
-- [GitHub Integration](#-github-integration)
-- [Project Settings](#-project-settings)
-- [Architecture](#-architecture)
-- [Frontend Architecture](#-frontend-architecture)
-- [Backend Architecture](#-backend-architecture)
-- [Real-Time Architecture](#-real-time-architecture)
-- [Data Model](#-data-model)
-- [Security](#-security)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [Development Workflow](#-development-workflow)
-- [Important Design Decisions](#-important-design-decisions)
-- [Current Limitations](#-current-limitations)
-- [Future Roadmap](#-future-roadmap)
-- [What I Learned](#-what-i-learned)
-- [Author](#-author)
+- [🚀 Overview](#-overview)
+- [🎯 Problem Statement](#-problem-statement)
+- [✨ Features](#-features)
+  - [🔐 Authentication & Authorization](#-authentication--authorization)
+  - [📝 Monaco Code Editor & File Management](#-monaco-code-editor--file-management)
+  - [👥 Real-Time Collaboration & Presence](#-real-time-collaboration--presence)
+  - [🐙 GitHub Repository Import](#-github-repository-import)
+- [🏗️ System Architecture](#️-system-architecture)
+- [🚀 Getting Started](#-getting-started)
+  - [1. Clone the Repository](#1-clone-the-repository)
+  - [2. Install Dependencies](#2-install-dependencies)
+  - [3. Configure Environment Variables](#3-configure-environment-variables)
+  - [4. Start the Application](#4-start-the-application)
+- [🧠 What I Learned](#-what-i-learned)
+- [👨‍💻 Author](#-author)
 
 ---
 
-# 🚀 Overview
+## 🚀 Overview
+**CodeSpace** is a full-stack browser-based collaborative development workspace designed around a VS Code-inspired coding experience[cite: 1]. The application combines project management, file management, code editing, real-time collaboration, access control, project communication, and GitHub repository importing into a single workspace[cite: 1]. 
 
-**CodeSpace** is a full-stack collaborative code editing platform designed around the experience of working inside a lightweight browser-based IDE.
+Instead of switching between multiple tools, CodeSpace brings these workflows together inside one development environment[cite: 1].
 
-The goal is not simply to provide a text editor.
+## 🎯 Problem Statement
+Traditional browser-based code editors often focus primarily on editing code in isolation[cite: 1]. However, collaborative development introduces additional problems such as tracking active users, handling simultaneous file edits, managing hierarchical project permissions, and integrating team communication close to the code[cite: 1]. CodeSpace was built to explore and solve these problems from both the frontend application and backend system architecture perspectives[cite: 1].
 
-The application combines:
+## ✨ Features
 
-- project management
-- file/folder navigation
-- code editing
-- authentication
-- role-based access control
-- file-level permissions
-- edit locking
-- real-time presence
-- project chat
-- project settings
-- GitHub repository import
+### 🔐 Authentication & Authorization
+CodeSpace strictly separates user authentication (identity) from project-level authorization (access)[cite: 1]. 
+* **Role-Based Access Control (RBAC):** Supports hierarchical project roles including Owner, Admin, Editor, and Viewer[cite: 1].
+* **File & Folder Permissions:** Permissions can be inherited from the project level down to specific folders and files, with the backend resolving the effective permission[cite: 1].
 
-into a single workspace.
+### 📝 Monaco Code Editor & File Management
+* **Rich Editing Experience:** Powered by Monaco Editor, featuring syntax highlighting, language-aware editing, keyboard shortcuts, word wrapping, and minimap configuration[cite: 1].
+* **Dirty-State Management:** Tracks unsaved changes by comparing editor modifications against the saved baseline content[cite: 1].
 
-The interface is intentionally inspired by developer tools such as VS Code, while the backend is designed around a project/team collaboration model.
+### 👥 Real-Time Collaboration & Presence
+* **Live Presence:** Users connected to the same project can instantly see other active collaborators via Socket.IO[cite: 1].
+* **File Locking:** Utilizes a heartbeat-monitored, file-level locking mechanism to prevent conflicting edits[cite: 1].
+* **Project Team Chat:** Built-in real-time chat scoped to the project environment[cite: 1].
 
----
+### 🐙 GitHub Repository Import
+* Seamlessly import existing GitHub repositories directly into CodeSpace projects[cite: 1].
+* Automatically skips common generated or dependency directories (e.g., `.git`, `node_modules`, `dist`)[cite: 1].
 
-# 💡 Why CodeSpace?
-
-Working on code collaboratively introduces problems that a normal text editor does not have to solve.
-
-For example:
-
-> Who is currently editing this file?
-
-> Can this user modify the file?
-
-> Should two users be allowed to edit the same file simultaneously?
-
-> What happens if a user disconnects while holding a lock?
-
-> How should project-level and file-level permissions interact?
-
-> How can a GitHub repository become a CodeSpace project?
-
-CodeSpace was built to explore these problems from both the **frontend UX** and **backend architecture** perspective.
-
----
-
-# ✨ Core Features
-
-## 🖥️ VS Code-Inspired Workspace
-
-The main workspace provides a familiar developer experience with:
-
-- file explorer
-- folder navigation
-- Monaco code editor
-- syntax highlighting
-- language detection
-- save controls
-- project header
-- collaboration indicators
-- chat
-- settings
-
-The interface follows a dark IDE-style design rather than a traditional dashboard layout.
-
----
-
-## 📁 Project & File Management
-
-Projects contain hierarchical files and folders.
-
-Users can:
-
-- create projects
-- browse project files
-- open files
-- edit files
-- save changes
-- create folders/files
-- manage project-level settings
-- control access to files and folders
-
-The file tree is separated from the editor so navigation remains independent from the currently opened file.
-
----
-
-## 🧑‍🤝‍🧑 Real-Time Presence
-
-CodeSpace tracks users currently connected to a project.
-
-The workspace can show:
-
-```text
-● Akshay
-● Rahul
-● Priya
+## 🏗️ System Architecture
+Security and state management are designed with the core engineering principle that the **backend is authoritative**[cite: 1]. 
+* **Frontend:** Orchestrates project loading, selected files, editor content, and socket state[cite: 1].
+* **Backend:** Enforces protected operations, validates project roles, resolves effective access permissions, and handles lock mechanisms[cite: 1].
+* **Real-Time Layer:** Instead of HTTP polling, the architecture relies on Socket.IO events to broadcast file updates, lock acquisitions, and chat messages[cite: 1].
