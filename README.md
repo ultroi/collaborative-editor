@@ -1,103 +1,147 @@
-# CodeMesh — Phases 1 & 3: Foundation + File System
+# CodeSpace
 
-Real-time collaborative code editor platform. This covers Phase 1
-(auth, projects, roles) and Phase 3 (file/folder tree, permission
-resolver). No Monaco editor or Socket.IO real-time layer yet — that's
-Phases 4 and 5.
+> A browser-based collaborative code workspace for creating, managing, and editing projects with a VS Code-inspired interface, real-time collaboration, role-based permissions, file locking, project chat, and GitHub repository import.
 
-## Stack
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/Node.js-20+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Express.js-Backend-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/Monaco%20Editor-Code%20Editor-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="Monaco Editor" />
+  <img src="https://img.shields.io/badge/Socket.IO-Real--Time-010101?style=for-the-badge&logo=socketdotio&logoColor=white" alt="Socket.IO" />
+</p>
 
-- **Server**: Node.js, Express, MongoDB/Mongoose, JWT (access + rotating
-  refresh token in an httpOnly cookie), Zod validation, Helmet, rate
-  limiting.
-- **Client**: React 18, Vite, React Router. Access token kept in memory only
-  (never localStorage) and refreshed silently via the httpOnly cookie.
+<p align="center">
+  <strong>Build. Edit. Collaborate. Ship.</strong>
+</p>
 
-## What's implemented
+---
 
-- Register / login / logout / silent session refresh
-- `User`, `Project`, `ProjectMember` models with proper indexes
-- Role-based project access: **owner > admin > member**, enforced entirely
-  server-side (`requireProjectRole` middleware) — the frontend never
-  decides permissions, only reflects what the API returns
-- Project CRUD (create, list mine, get, update, archive)
-- Member management (add / change role / remove), with the owner protected
-  from demotion or removal
-- Centralized error handling with a consistent `{ success, data, message }`
-  response envelope
-- `shared/constants/roles.js` — single source of truth for role names,
-  imported by both the server and (eventually) the client, so they can't
-  drift apart
+## 📌 Table of Contents
 
-**Phase 3 — File System:**
+- [Overview](#-overview)
+- [Why CodeSpace?](#-why-codespace)
+- [Core Features](#-core-features)
+- [Application Flow](#-application-flow)
+- [Collaboration Model](#-collaboration-model)
+- [Permissions & Roles](#-permissions--roles)
+- [File Locking](#-file-locking)
+- [GitHub Integration](#-github-integration)
+- [Project Settings](#-project-settings)
+- [Architecture](#-architecture)
+- [Frontend Architecture](#-frontend-architecture)
+- [Backend Architecture](#-backend-architecture)
+- [Real-Time Architecture](#-real-time-architecture)
+- [Data Model](#-data-model)
+- [Security](#-security)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
+- [Development Workflow](#-development-workflow)
+- [Important Design Decisions](#-important-design-decisions)
+- [Current Limitations](#-current-limitations)
+- [Future Roadmap](#-future-roadmap)
+- [What I Learned](#-what-i-learned)
+- [Author](#-author)
 
-- `File` model — a single collection for both files and folders, with a
-  denormalized `path` field kept in sync on create/rename/move, and a
-  uniqueness index preventing two siblings sharing a name
-- `Permission` model — explicit per-user read/write overrides on a folder
-  or file, layered on top of the project role
-- `resolveFileAccess()` (`utils/permissionResolver.js`) — walks from a node
-  up through its ancestor folders to find the nearest explicit override;
-  falls back to the role default (owner/admin: full access everywhere;
-  member: read-only) if none exists anywhere in the chain
-- Path-traversal guard (`utils/pathUtils.js`) — rejects `..`, `.`, and any
-  name containing `/` or `\`, both at the Mongoose schema level and again
-  explicitly in the controller
-- Full file/folder CRUD: create, rename (cascades path updates to every
-  descendant of a renamed folder), delete (cascading for folders, with
-  orphaned Permission rows cleaned up), get/save content
-- `GET /projects/:id/files` returns the whole tree pre-annotated with each
-  node's effective `{read, write}` for the caller, resolved in one batched
-  pass rather than one DB round-trip per node
-- Client: a file-tree sidebar (create/rename/delete, permission-aware —
-  write controls only render where the user actually has write access)
-  wired to a basic content viewer/editor at `/project/:id`. This is a plain
-  `<textarea>`, not Monaco yet — that's Phase 4. It's also last-write-wins;
-  the file-locking that prevents two people clobbering the same file is
-  Phase 5.
+---
 
-## Running it locally
+# 🚀 Overview
 
-```bash
-# 1. Install
-npm run install:all
+**CodeSpace** is a full-stack collaborative code editing platform designed around the experience of working inside a lightweight browser-based IDE.
 
-# 2. Configure the server
-cp server/.env.example server/.env
-# Fill in MONGODB_URI (local mongod or an Atlas cluster) and generate
-# JWT_ACCESS_SECRET / JWT_REFRESH_SECRET with:
-#   node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
+The goal is not simply to provide a text editor.
 
-# 3. Run both
-npm run dev:server   # http://localhost:5000
-npm run dev:client   # http://localhost:5173
-```
+The application combines:
 
-The server module graph and the client production build have both been
-verified to build/load cleanly, and every route (including the new file
-routes) has been confirmed to register correctly. I was not able to test
-the full request flow against a live MongoDB in this sandbox — there's no
-`mongod` available, and `mongodb-memory-server`'s binary download is
-blocked by the environment's network allowlist. The path-traversal guard
-and path-building logic *were* unit-tested directly (see the guard reject
-`../`, `.`, `..`, and embedded separators correctly). Run a smoke test
-against your own DB — especially the permission-inheritance walk and the
-folder-rename cascade — before building further on top of it.
+- project management
+- file/folder navigation
+- code editing
+- authentication
+- role-based access control
+- file-level permissions
+- edit locking
+- real-time presence
+- project chat
+- project settings
+- GitHub repository import
 
-## Next: Phase 2 → Phase 4
+into a single workspace.
 
-- Phase 2 (project settings screens at `/project/:id/settings`) can reuse
-  the member-management and now the permission-management endpoints
-  already built.
-- Phase 4 (Code Editor) swaps the placeholder `<textarea>` in `ProjectPage`
-  for Monaco — the content load/save API it needs already exists.
+The interface is intentionally inspired by developer tools such as VS Code, while the backend is designed around a project/team collaboration model.
 
-## Project structure
+---
 
-```
-collaborative-editor/
-├── client/          React + Vite frontend
-├── server/          Express + MongoDB backend
-└── shared/
-    └── constants/roles.js   role names shared by both
-```
+# 💡 Why CodeSpace?
+
+Working on code collaboratively introduces problems that a normal text editor does not have to solve.
+
+For example:
+
+> Who is currently editing this file?
+
+> Can this user modify the file?
+
+> Should two users be allowed to edit the same file simultaneously?
+
+> What happens if a user disconnects while holding a lock?
+
+> How should project-level and file-level permissions interact?
+
+> How can a GitHub repository become a CodeSpace project?
+
+CodeSpace was built to explore these problems from both the **frontend UX** and **backend architecture** perspective.
+
+---
+
+# ✨ Core Features
+
+## 🖥️ VS Code-Inspired Workspace
+
+The main workspace provides a familiar developer experience with:
+
+- file explorer
+- folder navigation
+- Monaco code editor
+- syntax highlighting
+- language detection
+- save controls
+- project header
+- collaboration indicators
+- chat
+- settings
+
+The interface follows a dark IDE-style design rather than a traditional dashboard layout.
+
+---
+
+## 📁 Project & File Management
+
+Projects contain hierarchical files and folders.
+
+Users can:
+
+- create projects
+- browse project files
+- open files
+- edit files
+- save changes
+- create folders/files
+- manage project-level settings
+- control access to files and folders
+
+The file tree is separated from the editor so navigation remains independent from the currently opened file.
+
+---
+
+## 🧑‍🤝‍🧑 Real-Time Presence
+
+CodeSpace tracks users currently connected to a project.
+
+The workspace can show:
+
+```text
+● Akshay
+● Rahul
+● Priya
