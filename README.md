@@ -40,15 +40,15 @@
 ## 🚀 Overview
 **CodeSpace** is a full-stack browser-based collaborative development workspace designed around a VS Code-inspired coding experience. The application combines project management, file management, code editing, real-time collaboration, access control, project communication, and GitHub repository importing into a single workspace. 
 
-Instead of switching between multiple tools, CodeSpace brings these workflows together inside one development environment[cite: 1].
+Instead of switching between multiple tools, CodeSpace brings these workflows together inside one development environment.
 
 ## 🎯 Problem Statement
-Traditional browser-based code editors often focus primarily on editing code in isolation. However, collaborative development introduces additional problems such as tracking active users, handling simultaneous file edits, managing hierarchical project permissions, and integrating team communication close to the code. CodeSpace was built to explore and solve these problems from both the frontend application and backend system architecture perspectives[cite: 1].
+Traditional browser-based code editors often focus primarily on editing code in isolation. However, collaborative development introduces additional problems such as tracking active users, handling simultaneous file edits, managing hierarchical project permissions, and integrating team communication close to the code. CodeSpace was built to explore and solve these problems from both the frontend application and backend system architecture perspectives.
 
 ## ✨ Features
 
 ### 🔐 Authentication & Authorization
-CodeSpace strictly separates user authentication (identity) from project-level authorization (access)[cite: 1]. 
+CodeSpace strictly separates user authentication (identity) from project-level authorization (access). 
 * **Role-Based Access Control (RBAC):** Supports hierarchical project roles including Owner, Admin, Editor, and Viewer[cite: 1].
 * **File & Folder Permissions:** Permissions can be inherited from the project level down to specific folders and files, with the backend resolving the effective permission.
 
@@ -66,7 +66,7 @@ CodeSpace strictly separates user authentication (identity) from project-level a
 * Automatically skips common generated or dependency directories (e.g., `.git`, `node_modules`, `dist`).
 
 ## 🏗️ System Architecture
-Security and state management are designed with the core engineering principle that the **backend is authoritative**[cite: 1]. 
-* **Frontend:** Orchestrates project loading, selected files, editor content, and socket state[cite: 1].
-* **Backend:** Enforces protected operations, validates project roles, resolves effective access permissions, and handles lock mechanisms[cite: 1].
-* **Real-Time Layer:** Instead of HTTP polling, the architecture relies on Socket.IO events to broadcast file updates, lock acquisitions, and chat messages[cite: 1].
+Security and state management are designed with the core engineering principle that the **backend is authoritative**. 
+* **Frontend:** Orchestrates project loading, selected files, editor content, and socket state.
+* **Backend:** Enforces protected operations, validates project roles, resolves effective access permissions, and handles lock mechanisms.
+* **Real-Time Layer:** Instead of HTTP polling, the architecture relies on Socket.IO events to broadcast file updates, lock acquisitions, and chat messages.
