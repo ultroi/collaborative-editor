@@ -49,7 +49,7 @@ Traditional browser-based code editors often focus primarily on editing code in 
 
 ### 🔐 Authentication & Authorization
 CodeSpace strictly separates user authentication (identity) from project-level authorization (access). 
-* **Role-Based Access Control (RBAC):** Supports hierarchical project roles including Owner, Admin, Editor, and Viewer[cite: 1].
+* **Role-Based Access Control (RBAC):** Supports hierarchical project roles including Owner, Admin, Editor, and Viewer.
 * **File & Folder Permissions:** Permissions can be inherited from the project level down to specific folders and files, with the backend resolving the effective permission.
 
 ### 📝 Monaco Code Editor & File Management
